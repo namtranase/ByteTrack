@@ -107,6 +107,7 @@ def make_parser():
     parser.add_argument("--match_thresh", type=float, default=0.9, help="matching threshold for tracking")
     parser.add_argument("--min-box-area", type=float, default=100, help='filter out tiny boxes')
     parser.add_argument("--mot20", dest="mot20", default=False, action="store_true", help="test mot20.")
+    parser.add_argument("--livetrack", dest="livetrack", default=False, action="store_true", help="eval for livetrack data.")
     return parser
 
 
@@ -114,7 +115,7 @@ def compare_dataframes(gts, ts):
     accs = []
     names = []
     for k, tsacc in ts.items():
-        if k in gts:            
+        if k in gts:
             logger.info('Comparing {}...'.format(k))
             accs.append(mm.utils.compare_to_groundtruth(gts[k], tsacc, 'iou', distth=0.5))
             names.append(k)
@@ -227,6 +228,8 @@ def main(exp, args, num_gpu):
     print('gt_type', gt_type)
     if args.mot20:
         gtfiles = glob.glob(os.path.join('datasets/MOT20/train', '*/gt/gt{}.txt'.format(gt_type)))
+    elif args.livetrack:
+        gtfiles = glob.glob(os.path.join('datasets/MOT_LT/val', '*/gt/gt{}.txt'.format(gt_type)))
     else:
         gtfiles = glob.glob(os.path.join('datasets/mot/train', '*/gt/gt{}.txt'.format(gt_type)))
     print('gt_files', gtfiles)
@@ -236,13 +239,13 @@ def main(exp, args, num_gpu):
     logger.info('Available LAP solvers {}'.format(mm.lap.available_solvers))
     logger.info('Default LAP solver \'{}\''.format(mm.lap.default_solver))
     logger.info('Loading files.')
-    
+
     gt = OrderedDict([(Path(f).parts[-3], mm.io.loadtxt(f, fmt='mot15-2D', min_confidence=1)) for f in gtfiles])
-    ts = OrderedDict([(os.path.splitext(Path(f).parts[-1])[0], mm.io.loadtxt(f, fmt='mot15-2D', min_confidence=-1)) for f in tsfiles])    
-    
-    mh = mm.metrics.create()    
+    ts = OrderedDict([(os.path.splitext(Path(f).parts[-1])[0], mm.io.loadtxt(f, fmt='mot15-2D', min_confidence=-1)) for f in tsfiles])
+
+    mh = mm.metrics.create()
     accs, names = compare_dataframes(gt, ts)
-    
+
     logger.info('Running metrics')
     metrics = ['recall', 'precision', 'num_unique_objects', 'mostly_tracked',
                'partially_tracked', 'mostly_lost', 'num_false_positives', 'num_misses',
@@ -250,7 +253,7 @@ def main(exp, args, num_gpu):
     summary = mh.compute_many(accs, names=names, metrics=metrics, generate_overall=True)
     # summary = mh.compute_many(accs, names=names, metrics=mm.metrics.motchallenge_metrics, generate_overall=True)
     # print(mm.io.render_summary(
-    #   summary, formatters=mh.formatters, 
+    #   summary, formatters=mh.formatters,
     #   namemap=mm.io.motchallenge_metric_names))
     div_dict = {
         'num_objects': ['num_false_positives', 'num_misses', 'num_switches', 'num_fragmentations'],

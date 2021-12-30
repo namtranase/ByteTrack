@@ -16,7 +16,9 @@
             // For training
             // "args": ["-f", "exps/example/mix_livetrack/yolox_s_mix_livetrack.py", "-d", "1", "-b", "1", "--fp16", "-o", "-c", "weights/mot_pretrained/bytetrack_s_mot17.pth.tar", "-expn", "lab"],
             // For eval
-            "args": ["-f", "exps/example/mot/yolox_x_mix_mot20_ch.py", "-c", "weights/mot_pretrained/bytetrack_s_mot17.pth.tar"]
+            // "args": ["-f", "exps/example/eval/yolox_x_ablation_mot17.py", "-c", "weights/mot_pretrained/bytetrack_ablation.pth.tar", "-b", "1", "-d", "1", "--fp16", "--fuse"],
+            "args": ["-f", "exps/example/mix_livetrack/yolox_s_mix_livetrack.py", "-c", "weights/trained/mix_livetrack/yolox_s_lastest_ckpt.pth.tar", "-b", "1", "-d", "1", "--fp16", "--fuse","--livetrack"]
+
         }
     ]
 }
