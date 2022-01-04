@@ -168,16 +168,18 @@ class BYTETracker(object):
             bboxes = output_results[:, :4]
         else:
             output_results = output_results.cpu().numpy()
-            scores = output_results[:, 4] * output_results[:, 5]
+            scores = output_results[:, 4] * output_results[:, 5] # = obj_conf * class_conf
             bboxes = output_results[:, :4]  # x1y1x2y2
         img_h, img_w = img_info[0], img_info[1]
         scale = min(img_size[0] / float(img_h), img_size[1] / float(img_w))
         bboxes /= scale
 
+        # To get D_high, 'remain'
         remain_inds = scores > self.args.track_thresh
         inds_low = scores > 0.1
         inds_high = scores < self.args.track_thresh
 
+        # To get the D_low, 'second'
         inds_second = np.logical_and(inds_low, inds_high)
         dets_second = bboxes[inds_second]
         dets = bboxes[remain_inds]
@@ -206,6 +208,7 @@ class BYTETracker(object):
         STrack.multi_predict(strack_pool)
         dists = matching.iou_distance(strack_pool, detections)
         if not self.args.mot20:
+            # What the fuck they doing here!
             dists = matching.fuse_score(dists, detections)
         matches, u_track, u_detection = matching.linear_assignment(dists, thresh=self.args.match_thresh)
 
@@ -216,6 +219,7 @@ class BYTETracker(object):
                 track.update(detections[idet], self.frame_id)
                 activated_starcks.append(track)
             else:
+                # Tim duoc box match voi lost_track -> re_activate
                 track.re_activate(det, self.frame_id, new_id=False)
                 refind_stracks.append(track)
 
@@ -243,6 +247,7 @@ class BYTETracker(object):
         for it in u_track:
             track = r_tracked_stracks[it]
             if not track.state == TrackState.Lost:
+                # If ko phat hien det match with track -> append vao track_lost
                 track.mark_lost()
                 lost_stracks.append(track)
 
@@ -290,6 +295,8 @@ class BYTETracker(object):
 
 
 def joint_stracks(tlista, tlistb):
+    """Join second_track with first_track if track_id in second_track not in first_track
+    """
     exists = {}
     res = []
     for t in tlista:
