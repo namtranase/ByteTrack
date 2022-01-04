@@ -16,8 +16,8 @@ class Exp(MyExp):
         self.width = 0.50
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         # self.data_dir = "datasets/LiveTrack_COCO"
-        self.train_ann = "gt_train.json"
-        self.val_ann = "gt_val.json"
+        self.train_ann = "train.json"
+        self.val_ann = "val.json"
         self.input_size = (608, 1088)
         self.test_size = (608, 1088)
         self.random_size = (12, 26)
@@ -41,7 +41,7 @@ class Exp(MyExp):
         )
 
         dataset = MOTDataset(
-            data_dir=os.path.join(get_yolox_datadir(), "mot"),
+            data_dir=os.path.join(get_yolox_datadir(), "MOT_LT"),
             json_file=self.train_ann,
             name='train',
             img_size=self.input_size,
@@ -96,12 +96,12 @@ class Exp(MyExp):
         from yolox.data import MOTDataset, ValTransform
 
         valdataset = MOTDataset(
-            data_dir=os.path.join(get_yolox_datadir(), "mot"),
+            data_dir=os.path.join(get_yolox_datadir(), "MOT_LT"),
             json_file=self.val_ann,
             img_size=self.test_size,
             name='val',
             preproc=ValTransform(
-                rgb_means=(0.485, 0.456, 0.406),
+                rgb_means=(0.485, 0.456, 0.4r06),
                 std=(0.229, 0.224, 0.225),
             ),
         )
