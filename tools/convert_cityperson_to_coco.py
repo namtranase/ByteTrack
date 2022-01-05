@@ -13,7 +13,7 @@ def load_paths(data_path):
         img_files = [x.replace('\n', '') for x in img_files]
         img_files = list(filter(lambda x: len(x) > 0, img_files))
     label_files = [x.replace('images', 'labels_with_ids').replace('.png', '.txt').replace('.jpg', '.txt') for x in img_files]
-    return img_files, label_files                    
+    return img_files, label_files
 
 if __name__ == '__main__':
     if not os.path.exists(OUT_PATH):
@@ -28,9 +28,9 @@ if __name__ == '__main__':
     for img_path, label_path in zip(img_paths, label_paths):
         image_cnt += 1
         im = Image.open(os.path.join("datasets", img_path))
-        image_info = {'file_name': img_path, 
+        image_info = {'file_name': img_path,
                         'id': image_cnt,
-                        'height': im.size[1], 
+                        'height': im.size[1],
                         'width': im.size[0]}
         out['images'].append(image_info)
         # Load labels

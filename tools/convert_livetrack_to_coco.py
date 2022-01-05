@@ -5,9 +5,9 @@ import cv2
 
 
 # Use the same script for MOT16
-DATA_PATH = 'datasets/MOT17/'
+DATA_PATH = 'datasets/MOT_LT/'
 OUT_PATH = os.path.join(DATA_PATH, 'annotations')
-SPLITS = ['train_half', 'val_half', 'train', 'test']  # --> split training data to train_half and val_half.
+SPLITS = ['train', 'val']  # --> split training data to train_half and val_half.
 HALF_VIDEO = True
 CREATE_SPLITTED_ANN = True
 CREATE_SPLITTED_DET = True
@@ -19,8 +19,8 @@ if __name__ == '__main__':
         os.makedirs(OUT_PATH)
 
     for split in SPLITS:
-        if split == "test":
-            data_path = os.path.join(DATA_PATH, 'test')
+        if split == "val":
+            data_path = os.path.join(DATA_PATH, 'val')
         else:
             data_path = os.path.join(DATA_PATH, 'train')
         out_path = os.path.join(OUT_PATH, '{}.json'.format(split))
@@ -34,8 +34,6 @@ if __name__ == '__main__':
         tid_last = -1
         for seq in sorted(seqs):
             if '.DS_Store' in seq:
-                continue
-            if 'mot' in DATA_PATH and (split != 'test' and not ('FRCNN' in seq)):
                 continue
             video_cnt += 1  # video sequence number.
             out['videos'].append({'id': video_cnt, 'file_name': seq})
@@ -54,9 +52,9 @@ if __name__ == '__main__':
             for i in range(num_images):
                 if i < image_range[0] or i > image_range[1]:
                     continue
-                img = cv2.imread(os.path.join(data_path, '{}/img1/{:06d}.jpg'.format(seq, i + 1)))
+                img = cv2.imread(os.path.join(data_path, '{}/img1/{:05d}.jpg'.format(seq, i + 1)))
                 height, width = img.shape[:2]
-                image_info = {'file_name': '{}/img1/{:06d}.jpg'.format(seq, i + 1),  # image name.
+                image_info = {'file_name': '{}/img1/{:05d}.jpg'.format(seq, i + 1),  # image name.
                               'id': image_cnt + i + 1,  # image number in the entire training set.
                               'frame_id': i + 1 - image_range[0],  # image number in the video sequence, starting from 1.
                               'prev_image_id': image_cnt + i if i > 0 else -1,  # image number in the entire training set.
@@ -72,7 +70,7 @@ if __name__ == '__main__':
                 if CREATE_SPLITTED_ANN and ('half' in split):
                     anns_out = np.array([anns[i] for i in range(anns.shape[0])
                                          if int(anns[i][0]) - 1 >= image_range[0] and
-                                         int(anns[i][0]) - 1 <= image_range[1]], np.float32) 
+                                         int(anns[i][0]) - 1 <= image_range[1]], np.float32)
                     anns_out[:, 0] -= image_range[0]
                     gt_out = os.path.join(seq_path, 'gt/gt_{}.txt'.format(split))
                     fout = open(gt_out, 'w')
@@ -103,31 +101,20 @@ if __name__ == '__main__':
                     cat_id = int(anns[i][7])
                     ann_cnt += 1
                     if not ('15' in DATA_PATH):
-                        #if not (float(anns[i][8]) >= 0.25):  # visibility.
-                            #continue
-                        if not (int(anns[i][6]) == 1):  # whether ignore.
-                            continue
-                        if int(anns[i][7]) in [3, 4, 5, 6, 9, 10, 11]:  # Non-person
-                            continue
-                        if int(anns[i][7]) in [2, 7, 8, 12]:  # Ignored person
-                            category_id = -1
-                        else:
-                            category_id = 1  # pedestrian(non-static)
-                            if not track_id == tid_last:
-                                tid_curr += 1
-                                tid_last = track_id
+                        category_id = 1  # pedestrian(non-static)
+                        if not track_id == tid_last:
+                            tid_curr += 1
+                            tid_last = track_id
                     else:
                         category_id = 1
-                    new_bbox = anns[i][2:6].tolist()
-                    new_bbox[3] = new_bbox[2]
                     ann = {'id': ann_cnt,
                            'category_id': category_id,
                            'image_id': image_cnt + frame_id,
                            'track_id': tid_curr,
-                           'bbox': new_bbox,
+                           'bbox': anns[i][2:6].tolist(),
                            'conf': float(anns[i][6]),
                            'iscrowd': 0,
-                           'area': float(anns[i][4] * anns[i][4])}
+                           'area': float(anns[i][4] * anns[i][5])}
                     out['annotations'].append(ann)
             image_cnt += num_images
             print(tid_curr, tid_last)

@@ -32,15 +32,17 @@ if __name__ == '__main__':
             image_cnt += 1
             file_path = DATA_PATH + 'CrowdHuman_{}/'.format(split) + '{}.jpg'.format(ann_data['ID'])
             im = Image.open(file_path)
-            image_info = {'file_name': '{}.jpg'.format(ann_data['ID']), 
+            image_info = {'file_name': '{}.jpg'.format(ann_data['ID']),
                           'id': image_cnt,
-                          'height': im.size[1], 
+                          'height': im.size[1],
                           'width': im.size[0]}
             out['images'].append(image_info)
             if split != 'test':
                 anns = ann_data['gtboxes']
                 for i in range(len(anns)):
                     ann_cnt += 1
+                    anns[i]['vbox'][3] = anns[i]['vbox'][2]
+                    anns[i]['fbox'][3] = anns[i]['fbox'][2]
                     fbox = anns[i]['fbox']
                     ann = {'id': ann_cnt,
                          'category_id': 1,
