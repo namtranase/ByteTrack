@@ -1,0 +1,22 @@
+#!/bin/bash -e
+#SBATCH --job-name=py-job # create a short name for your job
+#SBATCH --output=out_log/yolox_s_mix_dataset_det_livetrack%A.out # create a output file
+#SBATCH --error=out_log/yolox_s_mix_dataset_det_livetrack%A.err # create a error file
+#SBATCH --gpus=3
+#SBATCH --nodes=1
+#SBATCH --mem=192G
+#SBATCH --cpus-per-gpu=16
+#SBATCH --partition=applied
+#SBATCH --mail-type=all
+#SBATCH --mail-user=v.namtd12@vinai.io
+
+module purge
+module load python/miniconda3/miniconda3
+eval "$(conda shell.bash hook)"
+conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack
+
+
+# For mix_dataset_livetrack
+python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_m_mix_dataset_det_livetrack.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_x_mix_dataset_det_livetrack.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack
