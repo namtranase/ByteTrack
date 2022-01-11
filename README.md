@@ -22,7 +22,8 @@ pip3 install cython_bbox
 ```
 
 Step 4. Test
-You need to modify the config in test python file.
+Caution!!! - this is the first dummy version, I'll fix it later.
+You need to modify the config in the test python file.
 ```shell
 python tools/test_package.py
 ```
