@@ -17,22 +17,6 @@ ln -s ../ETHZ ethz_train
 cd ..
 """
 
-# MOT20_json = json.load(open('datasets/MOT20/annotations/train.json','r'))
-
-# img_list = list()
-# for img in MOT20_json['images']:
-#     img['file_name'] = 'MOT20_train/' + img['file_name']
-#     img_list.append(img)
-
-# ann_list = list()
-# for ann in MOT20_json['annotations']:
-#     ann_list.append(ann)
-
-# video_list = MOT20_json['videos']
-# category_list = MOT20_json['categories']
-
-# print('MOT20')
-
 MOT_LT_json = json.load(open('datasets/MOT_LT/annotations/train.json','r'))
 
 img_list = list()
@@ -52,7 +36,7 @@ print('MOT_LT')
 
 max_img = 10000
 max_ann = 2000000
-max_video = 10
+max_video = 16
 
 crowdhuman_json = json.load(open('datasets/crowdhuman/annotations/train.json','r'))
 img_id_count = 0
@@ -120,7 +104,7 @@ for img in ethz_json['images']:
     img['id'] = img['id'] + max_img
     img['video_id'] = max_video
     img_list.append(img)
-    
+
 for ann in ethz_json['annotations']:
     ann['id'] = ann['id'] + max_ann
     ann['image_id'] = ann['image_id'] + max_img
@@ -147,7 +131,7 @@ for img in cp_json['images']:
     img['id'] = img['id'] + max_img
     img['video_id'] = max_video
     img_list.append(img)
-    
+
 for ann in cp_json['annotations']:
     ann['id'] = ann['id'] + max_ann
     ann['image_id'] = ann['image_id'] + max_img
@@ -160,9 +144,37 @@ video_list.append({
     'file_name': 'cityperson'
 })
 
+max_img = 60000
+max_ann = 30000000
+
+MOT20_json = json.load(open('datasets/MOT20/annotations/train.json','r'))
+img_id_count = 0
+for img in MOT20_json['images']:
+    img_id_count += 1
+    img['file_name'] = 'MOT20_train/' + img['file_name']
+    img['frame_id'] = img_id_count
+    img['prev_image_id'] = img['id'] + max_img
+    img['next_image_id'] = img['id'] + max_img
+    img['id'] = img['id'] + max_img
+    img['video_id'] = max_video
+    img_list.append(img)
+
+for ann in MOT20_json['annotations']:
+    ann['id'] = ann['id'] + max_ann
+    ann['image_id'] = ann['image_id'] + max_img
+    ann_list.append(ann)
+
+print('MOT20')
+
+video_list.append({
+    'id': max_video,
+    'file_name': 'MOT20'
+})
+
+
 mix_json = dict()
 mix_json['images'] = img_list
 mix_json['annotations'] = ann_list
 mix_json['videos'] = video_list
 mix_json['categories'] = category_list
-json.dump(mix_json, open('datasets/mix_det/annotations/train.json','w'))
+json.dump(mix_json, open('datasets/mix_det_20/annotations/train.json','w'))
