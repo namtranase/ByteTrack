@@ -107,7 +107,8 @@ def make_parser():
     parser.add_argument("--match_thresh", type=float, default=0.9, help="matching threshold for tracking")
     parser.add_argument("--min-box-area", type=float, default=100, help='filter out tiny boxes')
     parser.add_argument("--mot20", dest="mot20", default=False, action="store_true", help="test mot20.")
-    parser.add_argument("--livetrack", dest="livetrack", default=False, action="store_true", help="eval for livetrack data.")
+    parser.add_argument("--livetrack", dest="livetrack", default=False, action="store_true", help="eval for livetrack val data.")
+    parser.add_argument("--livetrack_train", dest="livetrack_train", default=False, action="store_true", help="eval for livetrack train data.")
     return parser
 
 
@@ -230,6 +231,8 @@ def main(exp, args, num_gpu):
         gtfiles = glob.glob(os.path.join('datasets/MOT20/train', '*/gt/gt{}.txt'.format(gt_type)))
     elif args.livetrack:
         gtfiles = glob.glob(os.path.join('datasets/MOT_LT/val', '*/gt/gt{}.txt'.format(gt_type)))
+    elif args.livetrack_train:
+        gtfiles = glob.glob(os.path.join('datasets/MOT_LT/train', '*/gt/gt{}.txt'.format(gt_type)))
     else:
         gtfiles = glob.glob(os.path.join('datasets/mot/train', '*/gt/gt{}.txt'.format(gt_type)))
     print('gt_files', gtfiles)
