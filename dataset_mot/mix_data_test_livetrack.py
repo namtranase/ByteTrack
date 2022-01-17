@@ -3,35 +3,52 @@ import os
 
 
 """
-cd datasets
-mkdir -p mix_det/annotations
-cp mot/annotations/val_half.json mix_det/annotations/val_half.json
-cp mot/annotations/test.json mix_det/annotations/test.json
-cd mix_det
-ln -s ../mot/train mot_train
-ln -s ../crowdhuman/CrowdHuman_train crowdhuman_train
-ln -s ../crowdhuman/CrowdHuman_val crowdhuman_val
-ln -s ../Cityscapes cp_train
-ln -s ../ETHZ ethz_train
-cd ..
+cd datasets  &&
+mkdir -p mix_det/annotations &&
+cp MOT_LT/annotations/val.json mix_det/annotations/val.json &&
+# cp MOT_LT/annotations/test.json mix_det/annotations/test.json &&
+cd mix_det &&
+ln -s ../MOT_LT/train MOT_LT_train &&
+# ln -s ../MOT17/train MOT17_train &&
+ln -s ../crowdhuman/CrowdHuman_train crowdhuman_train &&
+ln -s ../crowdhuman/CrowdHuman_val crowdhuman_val &&
+ln -s ../Cityscapes cp_train &&
+ln -s ../ETHZ ethz_train &&
+cd ../../
 """
 
-mot_json = json.load(open('datasets/mot/annotations/train.json','r'))
+# MOT20_json = json.load(open('datasets/MOT20/annotations/train.json','r'))
+
+# img_list = list()
+# for img in MOT20_json['images']:
+#     img['file_name'] = 'MOT20_train/' + img['file_name']
+#     img_list.append(img)
+
+# ann_list = list()
+# for ann in MOT20_json['annotations']:
+#     ann_list.append(ann)
+
+# video_list = MOT20_json['videos']
+# category_list = MOT20_json['categories']
+
+# print('MOT20')
+
+MOT_LT_json = json.load(open('datasets/MOT_LT/annotations/train.json','r'))
 
 img_list = list()
-for img in mot_json['images']:
-    img['file_name'] = 'mot_train/' + img['file_name']
+for img in MOT_LT_json['images']:
+    img['file_name'] = 'MOT_LT_train/' + img['file_name']
     img_list.append(img)
 
 ann_list = list()
-for ann in mot_json['annotations']:
+for ann in MOT_LT_json['annotations']:
     ann_list.append(ann)
 
-video_list = mot_json['videos']
-category_list = mot_json['categories']
+video_list = MOT_LT_json['videos']
+category_list = MOT_LT_json['categories']
 
 
-print('mot17')
+print('MOT_LT')
 
 max_img = 10000
 max_ann = 2000000

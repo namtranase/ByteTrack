@@ -5,7 +5,7 @@ import cv2
 
 
 # Use the same script for MOT16
-DATA_PATH = 'datasets/MOT17'
+DATA_PATH = 'datasets/MOT17/'
 OUT_PATH = os.path.join(DATA_PATH, 'annotations')
 SPLITS = ['train_half', 'val_half', 'train', 'test']  # --> split training data to train_half and val_half.
 HALF_VIDEO = True
@@ -118,14 +118,16 @@ if __name__ == '__main__':
                                 tid_last = track_id
                     else:
                         category_id = 1
+                    new_bbox = anns[i][2:6].tolist()
+                    new_bbox[3] = new_bbox[2]
                     ann = {'id': ann_cnt,
                            'category_id': category_id,
                            'image_id': image_cnt + frame_id,
                            'track_id': tid_curr,
-                           'bbox': anns[i][2:6].tolist(),
+                           'bbox': new_bbox,
                            'conf': float(anns[i][6]),
                            'iscrowd': 0,
-                           'area': float(anns[i][4] * anns[i][5])}
+                           'area': float(anns[i][4] * anns[i][4])}
                     out['annotations'].append(ann)
             image_cnt += num_images
             print(tid_curr, tid_last)

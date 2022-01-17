@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             // For demo_track
-            // "args":["video", "--path", "/home/namtd/workspace/projects/face-id/data/old/AN3.mp4", "-f", "exps/example/mot_livetrack/yolox_s_mix_det.py", "-c", "/home/namtd/workspace/research/MOT-playground/ByteTrack/weights/mot_livetrack_new_exp/best_ckpt_yolox_s.pth", "--fp16", "--fuse", "--save_result"],
+            "args":["video", "--path", "/home/namtd/workspace/projects/face-id/data/old/AN3.mp4", "-f", "exps/example/mot_livetrack/yolox_s_mot_livetrack.py", "-c", "/home/namtd/workspace/research/MOT-playground/ByteTrack/weights/trained/mot_livetrack/yolox_s_mot_livetrack/best_ckpt.pth.tar", "--fp16", "--fuse", "--save_result"],
             // "args": ["video", "--path", "/home/namtd/workspace/projects/face-id/data/old/AN3.mp4", "-f", "exps/example/mot_livetrack/yolox_s_mix_det.py", "-c", "/home/namtd/workspace/research/MOT-playground/ByteTrack/weights/mot_pretrained/bytetrack_s_mot17.pth.tar", "--fp16", "--fuse", "--save_result"]
             // For training
             // "args": ["-f", "exps/example/mix_livetrack/yolox_s_mix_livetrack.py", "-d", "1", "-b", "1", "--fp16", "-o", "-c", "weights/mot_pretrained/bytetrack_s_mot17.pth.tar", "-expn", "lab"],
