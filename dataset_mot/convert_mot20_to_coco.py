@@ -118,7 +118,6 @@ if __name__ == '__main__':
                     else:
                         category_id = 1
                     new_bbox = anns[i][2:6].tolist()
-                    new_bbox[3] = new_bbox[2]
                     ann = {'id': ann_cnt,
                            'category_id': category_id,
                            'image_id': image_cnt + frame_id,

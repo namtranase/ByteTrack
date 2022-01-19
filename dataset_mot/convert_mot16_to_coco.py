@@ -7,7 +7,7 @@ import cv2
 # Use the same script for MOT16
 DATA_PATH = 'datasets/MOT16/'
 OUT_PATH = os.path.join(DATA_PATH, 'annotations')
-SPLITS = ['train']  # --> split training data to train_half and val_half.
+SPLITS = ['train', 'test']  # --> split training data to train_half and val_half.
 HALF_VIDEO = True
 CREATE_SPLITTED_ANN = True
 CREATE_SPLITTED_DET = True
@@ -118,7 +118,6 @@ if __name__ == '__main__':
                     else:
                         category_id = 1
                     new_bbox = anns[i][2:6].tolist()
-                    new_bbox[3] = new_bbox[2]
                     ann = {'id': ann_cnt,
                            'category_id': category_id,
                            'image_id': image_cnt + frame_id,

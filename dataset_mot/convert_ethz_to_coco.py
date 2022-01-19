@@ -41,7 +41,7 @@ if __name__ == '__main__':
             labels[:, 2] = image_info['width'] * (labels0[:, 2] - labels0[:, 4] / 2)
             labels[:, 3] = image_info['height'] * (labels0[:, 3] - labels0[:, 5] / 2)
             labels[:, 4] = image_info['width'] * labels0[:, 4]
-            labels[:, 5] = image_info['width'] * labels0[:, 4]
+            labels[:, 5] = image_info['width'] * labels0[:, 5]
 
             # labels[:, 5] = image_info['height'] * labels0[:, 5]
         else:

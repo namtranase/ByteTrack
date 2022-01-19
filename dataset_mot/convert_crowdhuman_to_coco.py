@@ -41,8 +41,6 @@ if __name__ == '__main__':
                 anns = ann_data['gtboxes']
                 for i in range(len(anns)):
                     ann_cnt += 1
-                    anns[i]['vbox'][3] = anns[i]['vbox'][2]
-                    anns[i]['fbox'][3] = anns[i]['fbox'][2]
                     fbox = anns[i]['fbox']
                     ann = {'id': ann_cnt,
                          'category_id': 1,
