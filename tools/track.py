@@ -59,7 +59,7 @@ def make_parser():
         dest="fp16",
         default=False,
         action="store_true",
-        help="Adopting mix precision evaluating.",
+        help="Adopting mixcision evaluating.",
     )
     parser.add_argument(
         "--fuse",
@@ -235,7 +235,7 @@ def main(exp, args, num_gpu):
     elif args.livetrack_train:
         gtfiles = glob.glob(os.path.join('datasets/MOT_LT/train', '*/gt/gt{}.txt'.format(gt_type)))
     elif args.mot16:
-        gtfiles = glob.glob(os.path.join('datasets/MOT16/train', '*/gt/gt{}.txt'.format(gt_type)))
+        gtfiles = glob.glob(os.path.join('datasets/MOT16/train', '*/gt_hs/gt{}.txt'.format(gt_type)))
     else:
         gtfiles = glob.glob(os.path.join('datasets/mot/train', '*/gt/gt{}.txt'.format(gt_type)))
     print('gt_files', gtfiles)
