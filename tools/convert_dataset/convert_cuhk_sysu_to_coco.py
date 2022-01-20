@@ -4,7 +4,7 @@ import json
 from PIL import Image
 
 DATA_PATH = 'datasets/CUHK-SYSU/'
-DATA_FILE_PATH = 'datasets/data_path/cuhk-sysu-half.train'
+DATA_FILE_PATH = 'datasets/data_path/cuhk-sysu.train'
 OUT_PATH = DATA_PATH + 'annotations/'
 
 def load_paths(data_path):
@@ -47,7 +47,6 @@ if __name__ == '__main__':
         for i in range(len(labels)):
             ann_cnt += 1
             fbox = labels[i, 2:6].tolist()
-            fbox[3] = fbox[2]
             ann = {'id': ann_cnt,
                     'category_id': 1,
                     'image_id': image_cnt,

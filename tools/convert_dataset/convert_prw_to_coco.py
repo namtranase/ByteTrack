@@ -47,13 +47,12 @@ if __name__ == '__main__':
         for i in range(len(labels)):
             ann_cnt += 1
             fbox = labels[i, 2:6].tolist()
-            fbox[3] = fbox[2]
             ann = {'id': ann_cnt,
                     'category_id': 1,
                     'image_id': image_cnt,
                     'track_id': -1,
                     'bbox': fbox,
-                    'area': fbox[2] * fbox[2],
+                    'area': fbox[2] * fbox[3],
                     'iscrowd': 0}
             out['annotations'].append(ann)
     print('loaded train for {} images and {} samples'.format(len(out['images']), len(out['annotations'])))
