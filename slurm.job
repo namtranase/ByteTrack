@@ -13,25 +13,11 @@
 module purge
 module load python/miniconda3/miniconda3
 eval "$(conda shell.bash hook)"
-conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack
+conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack_chal
 
 
-# For mix_dataset_livetrack
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_m_mix_dataset_det_livetrack.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_x_mix_dataset_det_livetrack.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack
+# For mot16_challenge
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_s_mix_dataset_mot16.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_mot16
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_m_mix_dataset_mot16.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_mot16
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_mot16
 
-# For mix_dataset_livetrack_mot17
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_mot17.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_mot17
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_m_mix_dataset_det_livetrack_mot17.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack_mot17
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_x_mix_dataset_det_livetrack_mot17.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack_mot17
-
-# For mix_dataset_livetrack_mot20
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_mot20.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_mot20
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_m_mix_dataset_det_livetrack_mot20.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack_mot20
-# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_x_mix_dataset_det_livetrack_mot20.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack_mot20
-
-# For mix_dataset_livetrack_baseline
-# python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_s_mix_dataset_det_livetrack_baseline.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_baseline
-# python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_m_mix_dataset_det_livetrack_baseline.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack_baseline
-# python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_x_mix_dataset_det_livetrack_baseline.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack_baseline
