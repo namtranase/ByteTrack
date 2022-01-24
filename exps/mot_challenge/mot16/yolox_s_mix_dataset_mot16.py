@@ -40,7 +40,7 @@ class Exp(MyExp):
         )
 
         dataset = MOTDataset(
-            data_dir=os.path.join(get_yolox_datadir(), "MOT16"),
+            data_dir=os.path.join(get_yolox_datadir(), "mix_mot16"),
             json_file=self.train_ann,
             name='',
             img_size=self.input_size,
