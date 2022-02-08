@@ -28,3 +28,9 @@ conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack_chal
 # python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_det_mot16_896_1600.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_mot16_896_1600
 # 26-01-2022
 # python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16_1080_1920.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_mot16_1080_1920
+# 02-07-2022
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16_800_1440.py  -d 3 -b 16 --fp16 -o  -expn yolox_x_mix_dataset_mot16_800_1440_no_pretrained
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16_800_1440.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot20.tar -expn yolox_x_mix_dataset_mot16_800_1440_pretrained_mot20
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16_896_1600.py  -d 3 -b 16 --fp16 -o  -expn yolox_x_mix_dataset_mot16_896_1600_no_pretrained
+# python tools/train.py -f exps/mot_challenge/mot16/yolox_x_mix_dataset_mot16_896_1600.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot20.tar -expn yolox_x_mix_dataset_mot16_896_1600_pretrained_mot20
+
