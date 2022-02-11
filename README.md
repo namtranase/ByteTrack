@@ -4,7 +4,7 @@
 ### 1. Installing on the host machine
 Step1. Install ByteTrack.
 ```shell
-git clone https://github.com/ifzhang/ByteTrack.git
+git clone -b feature/package https://github.com/namtranase/ByteTrack.git
 cd ByteTrack
 pip3 install -r requirements.txt
 python3 setup.py develop
