@@ -4,55 +4,39 @@ import os
 
 """
 cd datasets  &&
-mkdir -p mix_det/annotations &&
-cp MOT_LT/annotations/val.json mix_det/annotations/val.json &&
-# cp MOT_LT/annotations/test.json mix_det/annotations/test.json &&
-cd mix_det &&
-ln -s ../MOT_LT/train MOT_LT_train &&
-# ln -s ../MOT17/train MOT17_train &&
+mkdir -p mix1_mot20_challenge/annotations &&
+cp MOT20/annotations/train.json mix1_mot20_challenge/annotations/val.json &&
+cd mix1_mot20_challenge &&
 ln -s ../crowdhuman/CrowdHuman_train crowdhuman_train &&
-ln -s ../crowdhuman/CrowdHuman_val crowdhuman_val &&
 ln -s ../Cityscapes cp_train &&
 ln -s ../ETHZ ethz_train &&
+ln -s ../CUHK-SYSU cuhk_train &&
+ln -s ../PRW prw_train &&
+ln -s ../MOT17/train MOT17_train &&
+ln -s ../MOT20/train MOT20_train &&
 cd ../../
 """
 
-# MOT20_json = json.load(open('datasets/MOT20/annotations/train.json','r'))
-
-# img_list = list()
-# for img in MOT20_json['images']:
-#     img['file_name'] = 'MOT20_train/' + img['file_name']
-#     img_list.append(img)
-
-# ann_list = list()
-# for ann in MOT20_json['annotations']:
-#     ann_list.append(ann)
-
-# video_list = MOT20_json['videos']
-# category_list = MOT20_json['categories']
-
-# print('MOT20')
-
-MOT_LT_json = json.load(open('datasets/MOT_LT/annotations/train.json','r'))
+MOT20 = json.load(open('datasets/MOT20/annotations/train.json','r'))
 
 img_list = list()
-for img in MOT_LT_json['images']:
-    img['file_name'] = 'MOT_LT_train/' + img['file_name']
+for img in MOT20['images']:
+    img['file_name'] = 'MOT20_train/' + img['file_name']
     img_list.append(img)
 
 ann_list = list()
-for ann in MOT_LT_json['annotations']:
+for ann in MOT20['annotations']:
     ann_list.append(ann)
 
-video_list = MOT_LT_json['videos']
-category_list = MOT_LT_json['categories']
+video_list = MOT20['videos']
+category_list = MOT20['categories']
 
 
-print('MOT_LT')
+print('MOT20')
 
 max_img = 10000
 max_ann = 2000000
-max_video = 10
+max_video = 18
 
 crowdhuman_json = json.load(open('datasets/crowdhuman/annotations/train.json','r'))
 img_id_count = 0
@@ -120,7 +104,7 @@ for img in ethz_json['images']:
     img['id'] = img['id'] + max_img
     img['video_id'] = max_video
     img_list.append(img)
-    
+
 for ann in ethz_json['annotations']:
     ann['id'] = ann['id'] + max_ann
     ann['image_id'] = ann['image_id'] + max_img
@@ -147,7 +131,7 @@ for img in cp_json['images']:
     img['id'] = img['id'] + max_img
     img['video_id'] = max_video
     img_list.append(img)
-    
+
 for ann in cp_json['annotations']:
     ann['id'] = ann['id'] + max_ann
     ann['image_id'] = ann['image_id'] + max_img
@@ -160,9 +144,92 @@ video_list.append({
     'file_name': 'cityperson'
 })
 
+max_img = 60000
+max_ann = 30000000
+
+MOT17_json = json.load(open('datasets/MOT17/annotations/train.json','r'))
+img_id_count = 0
+for img in MOT17_json['images']:
+    img_id_count += 1
+    img['file_name'] = 'MOT17_train/' + img['file_name']
+    img['frame_id'] = img_id_count
+    img['prev_image_id'] = img['id'] + max_img
+    img['next_image_id'] = img['id'] + max_img
+    img['id'] = img['id'] + max_img
+    img['video_id'] = max_video
+    img_list.append(img)
+
+for ann in MOT17_json['annotations']:
+    ann['id'] = ann['id'] + max_ann
+    ann['image_id'] = ann['image_id'] + max_img
+    ann_list.append(ann)
+
+print('MOT17')
+
+video_list.append({
+    'id': max_video,
+    'file_name': 'MOT17'
+})
+
+
+max_img = 70000
+max_ann = 40000000
+
+cuhk_json = json.load(open('datasets/CUHK-SYSU/annotations/train.json','r'))
+img_id_count = 0
+for img in cuhk_json['images']:
+    img_id_count += 1
+    img['file_name'] = 'cuhk_train/' + img['file_name'][10:]
+    img['frame_id'] = img_id_count
+    img['prev_image_id'] = img['id'] + max_img
+    img['next_image_id'] = img['id'] + max_img
+    img['id'] = img['id'] + max_img
+    img['video_id'] = max_video
+    img_list.append(img)
+
+for ann in cuhk_json['annotations']:
+    ann['id'] = ann['id'] + max_ann
+    ann['image_id'] = ann['image_id'] + max_img
+    ann_list.append(ann)
+
+print('CUHK-SYSU')
+
+video_list.append({
+    'id': max_video,
+    'file_name': 'CUHK-SYSU'
+})
+
+max_img = 82000
+max_ann = 50000000
+
+prw_json = json.load(open('datasets/PRW/annotations/train.json','r'))
+img_id_count = 0
+for img in prw_json['images']:
+    img_id_count += 1
+    img['file_name'] = 'prw_train/' + img['file_name'][4:]
+    img['frame_id'] = img_id_count
+    img['prev_image_id'] = img['id'] + max_img
+    img['next_image_id'] = img['id'] + max_img
+    img['id'] = img['id'] + max_img
+    img['video_id'] = max_video
+    img_list.append(img)
+
+for ann in prw_json['annotations']:
+    ann['id'] = ann['id'] + max_ann
+    ann['image_id'] = ann['image_id'] + max_img
+    ann_list.append(ann)
+
+print('PRW')
+
+video_list.append({
+    'id': max_video,
+    'file_name': 'PRW'
+})
+
 mix_json = dict()
 mix_json['images'] = img_list
 mix_json['annotations'] = ann_list
 mix_json['videos'] = video_list
 mix_json['categories'] = category_list
-json.dump(mix_json, open('datasets/mix_det/annotations/train.json','w'))
+
+json.dump(mix_json, open('datasets/mix1_mot20_challenge/annotations/train.json','w'))
