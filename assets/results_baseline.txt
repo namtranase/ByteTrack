@@ -1,0 +1,34 @@
+## yolox_s_mix_dataset_det_livetrack_baseline
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.537
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.911
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.630
+ MOTA: 0.817
+
+## yolox_m_mix_dataset_det_livetrack_baseline
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.559
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.932
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.646
+
+## yolox_x_mix_dataset_det_livetrack_baseline
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.554
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.915
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.644
+
+## yolox_s_mix_dataset_det_livetrack_baseline
+AP@0.50:0.95 = 0.537
+AP@0.50      = 0.911
+AR@0.50:0.95 = 0.630
+MOTA: 0.817
+
+## yolox_m_mix_dataset_det_livetrack_baseline
+AP@0.50:0.95 = 0.559
+AP@0.50      = 0.932
+AR@0.50:0.95 = 0.646
+MOTA: 0.856
+
+## yolox_x_mix_dataset_det_livetrack_baseline
+AP@0.50:0.95 = 0.554
+AP@0.50      = 0.915
+AR@0.50:0.95 = 0.644
+MOTA: 0.842
+

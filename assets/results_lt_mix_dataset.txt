@@ -1,0 +1,59 @@
+## yolox_s_mix_dataset_det_livetrack
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.544
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.919
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.631
+ MOTA: 0.825
+
+## yolox_m_mix_dataset_det_livetrack
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.529
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.920
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.619
+ MOTA: 0.846
+
+## yolox_x_mix_dataset_det_livetrack
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.544
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.926
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.635
+ MOTA: 0.860
+
+## yolox_s_mix_dataset_det_livetrack_mot17
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.542
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.896
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.622
+
+## yolox_s_mix_dataset_det_livetrack_mot20
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.554
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.914
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.640
+
+
+## yolox_s_mix_dataset_det_livetrack
+AP@0.50:0.95 = 0.544
+AP@0.50      = 0.919
+AR@0.50:0.95 = 0.631
+MOTA: 0.825
+
+## yolox_m_mix_dataset_det_livetrack
+AP@0.50:0.95 = 0.529
+AP@0.50      = 0.920
+AR@0.50:0.95 = 0.619
+MOTA: 0.846
+
+## yolox_x_mix_dataset_det_livetrack
+AP@0.50:0.95 = 0.544
+AP@0.50      = 0.926
+AR@0.50:0.95 = 0.635
+MOTA: 0.860
+
+## yolox_s_mix_dataset_det_livetrack_mot17
+AP@0.50:0.95 = 0.542
+AP@0.50      = 0.896
+AR@0.50:0.95 = 0.622
+MOTA: 0.763
+
+## yolox_s_mix_dataset_det_livetrack_mot20
+AP@0.50:0.95 = 0.554
+AP@0.50      = 0.914
+AR@0.50:0.95 = 0.640
+MOTA: 0.809
+
