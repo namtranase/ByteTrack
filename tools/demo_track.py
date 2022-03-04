@@ -121,9 +121,10 @@ class Predictor(object):
         exp,
         trt_file=None,
         decoder=None,
-        device=torch.device("cpu"),
+        device=torch.device("cuda"),
         fp16=False
     ):
+        print("Device .........", device)
         self.model = model
         self.decoder = decoder
         self.num_classes = exp.num_classes
@@ -240,7 +241,10 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
     fps = cap.get(cv2.CAP_PROP_FPS)
     timestamp = time.strftime("%Y_%m_%d_%H_%M_%S", current_time)
     save_folder = osp.join(vis_folder, timestamp)
+    save_bbox_path = osp.join(save_folder, "track_id")
     os.makedirs(save_folder, exist_ok=True)
+    os.makedirs(save_bbox_path, exist_ok=True)
+
     if args.demo == "video":
         save_path = osp.join(save_folder, args.path.split("/")[-1])
     else:
@@ -276,9 +280,16 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                             f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},{t.score:.2f},-1,-1,-1\n"
                         )
                 timer.toc()
-                online_im = plot_tracking(
+                online_im, bboxes, ids = plot_tracking(
                     img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
                 )
+                for box, id_ in zip(bboxes, ids):
+                    if len(box) == 0:
+                        continue
+                    save_id_path = osp.join(save_bbox_path, str(id_))
+                    os.makedirs(save_id_path, exist_ok=True)
+                    save_bbox_id = osp.join(save_id_path,'{}.png'.format(frame_id))
+                    cv2.imwrite(save_bbox_id, box)
             else:
                 timer.toc()
                 online_im = img_info['raw_img']
@@ -332,7 +343,7 @@ def main(exp, args):
         else:
             ckpt_file = args.ckpt
         logger.info("loading checkpoint")
-        ckpt = torch.load(ckpt_file, map_location="cpu")
+        ckpt = torch.load(ckpt_file, map_location="cuda")
         # load the model state dict
         model.load_state_dict(ckpt["model"])
         logger.info("loaded checkpoint done.")

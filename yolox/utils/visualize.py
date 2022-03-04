@@ -54,13 +54,15 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
     im_h, im_w = im.shape[:2]
 
     top_view = np.zeros([im_w, im_w, 3], dtype=np.uint8) + 255
-
     #text_scale = max(1, image.shape[1] / 1600.)
     #text_thickness = 2
     #line_thickness = max(1, int(image.shape[1] / 500.))
     text_scale = 2
     text_thickness = 2
     line_thickness = 3
+
+    bboxes = []
+    ids = []
 
     radius = max(5, int(im_w/140.))
     cv2.putText(im, 'frame: %d fps: %.2f Human count: %d' % (frame_id, fps, len(tlwhs)),
@@ -69,6 +71,10 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
     for i, tlwh in enumerate(tlwhs):
         x1, y1, w, h = tlwh
         intbox = tuple(map(int, (x1, y1, x1 + w, y1 + h)))
+        new_image = image.copy()
+        ROI = new_image[intbox[1]:intbox[3], intbox[0]:intbox[2]]
+        bboxes.append(ROI)
+        ids.append(int(obj_ids[i]))
         obj_id = int(obj_ids[i])
         id_text = '{}'.format(int(obj_id))
         if ids2 is not None:
@@ -77,7 +83,7 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
         cv2.rectangle(im, intbox[0:2], intbox[2:4], color=color, thickness=line_thickness)
         cv2.putText(im, id_text, (intbox[0], intbox[1]), cv2.FONT_HERSHEY_PLAIN, text_scale, (0, 0, 255),
                     thickness=text_thickness)
-    return im
+    return im, bboxes, ids
 
 
 _COLORS = np.array(
