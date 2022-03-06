@@ -2,9 +2,9 @@
 #SBATCH --job-name=namtd12 # create a short name for your job
 #SBATCH --output=out_log/yolox_s_mix_dataset_det_livetrack%A.out # create a output file
 #SBATCH --error=out_log/yolox_s_mix_dataset_det_livetrack%A.err # create a error file
-#SBATCH --gpus=4
+#SBATCH --gpus=3
 #SBATCH --nodes=1
-#SBATCH --mem=256G
+#SBATCH --mem=192G
 #SBATCH --cpus-per-gpu=32
 #SBATCH --partition=applied
 #SBATCH --mail-type=all
@@ -41,6 +41,6 @@ conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack_chal
 # python tools/train.py -f exps/mot_challenge/mot20/yolox_x_mix1_mot20_challenge_896_1600.py  -d 3 -b 16 --fp16 -o  -c weights/mot_pretrained/bytetrack_x_mot20.tar -expn yolox_x_mix1_mot20_challenge_896_1600_pretrained_mot20
 # python tools/train.py -f exps/mot_challenge/mot20/yolox_x_mix1_mot20_challenge_896_1600.py  -d 3 -b 16 --fp16 -o  -expn yolox_x_mix1_mot20_challenge_896_1600_no_pretrained
 # python tools/train.py -f exps/mot_challenge/mot20/yolox_x_mix2_mot20_challenge_896_1600.py  -d 3 -b 16 --fp16 -o  -expn yolox_x_mix2_mot20_challenge_896_1600_no_pretrained
-# 22-02-2022
-# python tools/train.py -f exps/mot_challenge/motsynth/yolox_x_motsynth_dataset_800_1440.py  -d 4 -b 32 --fp16 -o -expn yolox_x_motsynth_dataset_800_1440
-# python tools/train.py -f exps/mot_challenge/motsynth/yolox_x_motsynth_dataset_896_1600.py  -d 4 -b 32 --fp16 -o -expn yolox_x_motsynth_dataset_896_1600
+# 06-03-2022
+# python tools/train.py -f exps/mot_challenge/motsynth/yolox_x_motsynth_dataset_800_1440.py  -d 3 -b 16 --fp16 -o -expn yolox_x_motsynth_dataset_800_1440_20seq
+# python tools/train.py -f exps/mot_challenge/motsynth/yolox_x_motsynth_dataset_896_1600.py  -d 3 -b 16 --fp16 -o -expn yolox_x_motsynth_dataset_896_1600_20seq

@@ -13,9 +13,9 @@
 
 # MOTSynth (22-02-2022)
 ## datasets
-+ MOTSynth (full)
++ MOTSynth (20 seqs)
 ## Exps
-+ yolox_x_mix1_mot20_challenge_800_1440: 800x1440, 80e, no_pretrained
-+ yolox_x_mix1_mot20_challenge_896_1600: 800x1440, 80e, no_pretrained
++ yolox_x_motsynth_dataset_800_1440: 800x1440, 80e, no_pretrained
++ yolox_x_motsynth_dataset_896_1600: 800x1440, 80e, no_pretrained
 
 
