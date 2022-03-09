@@ -286,6 +286,7 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                 for box, id_ in zip(bboxes, ids):
                     if len(box) == 0:
                         continue
+                    box = cv2.resize(box, [64,128])
                     save_id_path = osp.join(save_bbox_path, str(id_))
                     os.makedirs(save_id_path, exist_ok=True)
                     save_bbox_id = osp.join(save_id_path,'{}.png'.format(frame_id))

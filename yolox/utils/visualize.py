@@ -70,7 +70,14 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
 
     for i, tlwh in enumerate(tlwhs):
         x1, y1, w, h = tlwh
-        intbox = tuple(map(int, (x1, y1, x1 + w, y1 + h)))
+        if w*2 > h:
+            new_h = w * 2
+            new_w = w
+        else:
+            new_h = h
+            new_w = h / 2
+        # intbox = tuple(map(int, (x1, y1, x1 + w, y1 + h)))
+        intbox = tuple(map(int, (x1, y1, x1 + new_w, y1 + new_h)))
         new_image = image.copy()
         ROI = new_image[intbox[1]:intbox[3], intbox[0]:intbox[2]]
         bboxes.append(ROI)
