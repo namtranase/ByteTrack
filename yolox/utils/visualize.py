@@ -49,7 +49,7 @@ def get_color(idx):
     return color
 
 
-def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=None):
+def plot_tracking(track_traj, image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=None):
     im = np.ascontiguousarray(np.copy(image))
     im_h, im_w = im.shape[:2]
 
@@ -61,9 +61,10 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
     text_scale = 2
     text_thickness = 2
     line_thickness = 3
+    traj_thickness = 2
 
     radius = max(5, int(im_w/140.))
-    cv2.putText(im, 'frame: %d fps: %.2f Human count: %d' % (frame_id, fps, len(tlwhs)),
+    cv2.putText(im, 'frame: %d fps: %.2f                      Number of pedestrians: %d' % (frame_id, fps, len(tlwhs)),
                 (0, int(15 * text_scale)), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), thickness=2)
 
     for i, tlwh in enumerate(tlwhs):
@@ -77,6 +78,17 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
         cv2.rectangle(im, intbox[0:2], intbox[2:4], color=color, thickness=line_thickness)
         cv2.putText(im, id_text, (intbox[0], intbox[1]), cv2.FONT_HERSHEY_PLAIN, text_scale, (0, 0, 255),
                     thickness=text_thickness)
+        pts_demo = track_traj[obj_id]
+
+        for i in range(1, len(pts_demo)):
+            # if either of the tracked points are None, ignore
+            # them
+            if pts_demo[i - 1] is None or pts_demo[i] is None:
+                continue
+            # otherwise, compute the thickness of the line and
+            # draw the connecting lines
+            cv2.line(im, pts_demo[i - 1], pts_demo[i], color, traj_thickness)
+
     return im
 
 

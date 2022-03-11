@@ -1,4 +1,5 @@
 import argparse
+from collections import deque
 import os
 import os.path as osp
 import time
@@ -253,6 +254,7 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
     timer = Timer()
     frame_id = 0
     results = []
+    track_traj = {}
     while True:
         if frame_id % 20 == 0:
             logger.info('Processing frame {} ({:.2f} fps)'.format(frame_id, 1. / max(1e-5, timer.average_time)))
@@ -276,8 +278,13 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                             f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},{t.score:.2f},-1,-1,-1\n"
                         )
                 timer.toc()
+                for track, bbox in zip(online_ids, online_tlwhs):
+                    if track not in track_traj:
+                        track_traj[track] = deque(maxlen=100)
+                    center = (int(bbox[0] + bbox[2] / 2), int(bbox[1] + bbox[3]))
+                    track_traj[track].appendleft(center)
                 online_im = plot_tracking(
-                    img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
+                    track_traj, img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
                 )
             else:
                 timer.toc()
