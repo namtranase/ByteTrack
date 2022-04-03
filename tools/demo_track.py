@@ -11,7 +11,7 @@ from loguru import logger
 from yolox.data.data_augment import preproc
 from yolox.exp import get_exp
 from yolox.utils import fuse_model, get_model_info, postprocess
-from yolox.utils.visualize import plot_tracking
+from yolox.utils.visualize import plot_tracking_trajectory, plot_tracking_distance
 from yolox.tracker.byte_tracker import BYTETracker
 from yolox.tracking_utils.timer import Timer
 
@@ -24,9 +24,10 @@ def make_parser():
     parser.add_argument(
         "demo", default="image", help="demo type, eg. image, video and webcam"
     )
+    parser.add_argument("-type", "--demo_type", type=str, default="trajectory") # social_distance, heatmap
     parser.add_argument("-expn", "--experiment-name", type=str, default=None)
     parser.add_argument("-n", "--name", type=str, default=None, help="model name")
-
+    
     parser.add_argument(
         #"--path", default="./datasets/mot/train/MOT17-05-FRCNN/img1", help="path to images or video"
         "--path", default="./videos/palace.mp4", help="path to images or video"
@@ -279,13 +280,24 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                         )
                 timer.toc()
                 for track, bbox in zip(online_ids, online_tlwhs):
-                    if track not in track_traj:
-                        track_traj[track] = deque(maxlen=100)
-                    center = (int(bbox[0] + bbox[2] / 2), int(bbox[1] + bbox[3]))
-                    track_traj[track].appendleft(center)
-                online_im = plot_tracking(
-                    track_traj, img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
-                )
+                    if args.demo_type == "trajectory":
+                        if track not in track_traj:
+                            track_traj[track] = deque(maxlen=100)
+                        center = (int(bbox[0] + bbox[2] / 2), int(bbox[1] + bbox[3]))
+                        track_traj[track].appendleft(center)
+                    # elif args.demo_type == "social_distance":
+                    #     if track not in track_traj:
+                    #         track_traj[track] = deque(maxlen=1000)
+                    #     center = (int(bbox[0] + bbox[2] / 2), int(bbox[1] + bbox[3] / 2))
+                    #     track_traj[track].appendleft(center)
+                if args.demo_type == "trajectory":
+                    online_im = plot_tracking_trajectory(
+                        track_traj, img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
+                    )
+                elif args.demo_type == "social_distance":
+                    online_im = plot_tracking_distance(
+                        img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1, fps=1. / timer.average_time
+                    )
             else:
                 timer.toc()
                 online_im = img_info['raw_img']
@@ -339,7 +351,7 @@ def main(exp, args):
         else:
             ckpt_file = args.ckpt
         logger.info("loading checkpoint")
-        ckpt = torch.load(ckpt_file, map_location="cpu")
+        ckpt = torch.load(ckpt_file, map_location="cuda")
         # load the model state dict
         model.load_state_dict(ckpt["model"])
         logger.info("loaded checkpoint done.")
