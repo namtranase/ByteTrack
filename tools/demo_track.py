@@ -12,6 +12,7 @@ from yolox.exp import get_exp
 from yolox.utils import fuse_model, get_model_info, postprocess
 from yolox.utils.visualize import plot_tracking
 from yolox.tracker.byte_tracker import BYTETracker
+from yolox.ocsort_tracker.ocsort import OCSort
 from yolox.tracking_utils.timer import Timer
 
 
@@ -181,7 +182,8 @@ def image_demo(predictor, vis_folder, current_time, args):
     else:
         files = [args.path]
     files.sort()
-    tracker = BYTETracker(args, frame_rate=args.fps)
+    # tracker = BYTETracker(args, frame_rate=args.fps)
+    tracker = OCSort(0.6, 0.3) #OCSort(det_thresh=args.track_thresh, iou_threshold=args.iou_thresh)
     timer = Timer()
     results = []
 

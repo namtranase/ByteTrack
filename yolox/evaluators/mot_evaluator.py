@@ -13,6 +13,7 @@ from yolox.utils import (
     xyxy2xywh
 )
 from yolox.tracker.byte_tracker import BYTETracker
+from yolox.ocsort_tracker.ocsort import OCSort
 from yolox.sort_tracker.sort import Sort
 from yolox.deepsort_tracker.deepsort import DeepSort
 from yolox.motdt_tracker.motdt_tracker import OnlineTracker
@@ -125,7 +126,8 @@ class MOTEvaluator:
             model(x)
             model = model_trt
             
-        tracker = BYTETracker(self.args)
+        # tracker = BYTETracker(self.args)
+        tracker = OCSort(0.6, 0.3)
         ori_thresh = self.args.track_thresh
         for cur_iter, (imgs, _, info_imgs, ids) in enumerate(
             progress_bar(self.dataloader)
@@ -162,7 +164,8 @@ class MOTEvaluator:
                 if video_name not in video_names:
                     video_names[video_id] = video_name
                 if frame_id == 1:
-                    tracker = BYTETracker(self.args)
+                    # tracker = BYTETracker(self.args)
+                    tracker = OCSort(0.6, 0.3)
                     if len(results) != 0:
                         result_filename = os.path.join(result_folder, '{}.txt'.format(video_names[video_id - 1]))
                         write_results(result_filename, results)
@@ -194,14 +197,17 @@ class MOTEvaluator:
                 online_tlwhs = []
                 online_ids = []
                 online_scores = []
+                # print(online_targets)
+                # raise 1==2
                 for t in online_targets:
-                    tlwh = t.tlwh
-                    tid = t.track_id
+                    # print(t)
+                    tlwh = t[:-1]
+                    tid = t[-1]
                     vertical = tlwh[2] / tlwh[3] > 1.6
                     if tlwh[2] * tlwh[3] > self.args.min_box_area and not vertical:
                         online_tlwhs.append(tlwh)
                         online_ids.append(tid)
-                        online_scores.append(t.score)
+                        online_scores.append(0.7)
                 # save results
                 results.append((frame_id, online_tlwhs, online_ids, online_scores))
 
