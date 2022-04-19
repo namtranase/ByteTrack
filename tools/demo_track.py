@@ -251,7 +251,8 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
     vid_writer = cv2.VideoWriter(
         save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (int(width), int(height))
     )
-    tracker = BYTETracker(args, frame_rate=30)
+    # tracker = BYTETracker(args, frame_rate=30)
+    tracker = OCSort(0.4, 0.2)
     timer = Timer()
     frame_id = 0
     results = []
@@ -267,15 +268,17 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                 online_ids = []
                 online_scores = []
                 for t in online_targets:
-                    tlwh = t.tlwh
-                    tid = t.track_id
+                    tlwh = [t[0], t[1], t[2] - t[0], t[3] - t[1]]
+                    tid = t[4]
+                    # tlwh = t.tlwh
+                    # tid = t.track_id
                     vertical = tlwh[2] / tlwh[3] > args.aspect_ratio_thresh
                     if tlwh[2] * tlwh[3] > args.min_box_area and not vertical:
                         online_tlwhs.append(tlwh)
                         online_ids.append(tid)
-                        online_scores.append(t.score)
+                        online_scores.append(0.6)
                         results.append(
-                            f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},{t.score:.2f},-1,-1,-1\n"
+                            f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},{0.6:.2f},-1,-1,-1\n"
                         )
                 timer.toc()
                 online_im = plot_tracking(

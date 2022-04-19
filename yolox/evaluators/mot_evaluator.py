@@ -201,8 +201,9 @@ class MOTEvaluator:
                 # raise 1==2
                 for t in online_targets:
                     # print(t)
-                    tlwh = t[:-1]
-                    tid = t[-1]
+                    tlwh = [t[0], t[1], t[2] - t[0], t[3] - t[1]]
+                    tid = t[4]
+                    
                     vertical = tlwh[2] / tlwh[3] > 1.6
                     if tlwh[2] * tlwh[3] > self.args.min_box_area and not vertical:
                         online_tlwhs.append(tlwh)
