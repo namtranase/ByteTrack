@@ -20,14 +20,15 @@ def make_parser():
         "-m",
         "--model",
         type=str,
-        default="../../bytetrack_s.onnx",
+        default="/home/namtd/workspace/research/MOT-playground/ByteTrack/weights/onnx/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_320_576.onnx",
         help="Input your onnx model.",
     )
+
     parser.add_argument(
         "-i",
         "--video_path",
         type=str,
-        default='../../videos/palace.mp4',
+        default='/home/namtd/Desktop/set-12.mp4',
         help="Path to your input image.",
     )
     parser.add_argument(
@@ -54,7 +55,10 @@ def make_parser():
     parser.add_argument(
         "--input_shape",
         type=str,
-        default="608,1088",
+        # default="608,1088",
+        # default="224,384",
+        # default="256,480",
+        default="320,576",
         help="Specify an input shape for inference.",
     )
     parser.add_argument(
