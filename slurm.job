@@ -35,3 +35,23 @@ conda activate /lustre/scratch/client/vinai/users/namtd12/envs/bytetrack
 # python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_s_mix_dataset_det_livetrack_baseline.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_baseline
 # python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_m_mix_dataset_det_livetrack_baseline.py  -d 3 -b 32 --fp16 -o -c weights/mot_pretrained/bytetrack_m_mot17.pth.tar -expn yolox_m_mix_dataset_det_livetrack_baseline
 # python tools/train.py -f exps/example/mix_dataset_livetrack/baseline/yolox_x_mix_dataset_det_livetrack_baseline.py  -d 3 -b 16 --fp16 -o -c weights/mot_pretrained/bytetrack_x_mot17.pth.tar -expn yolox_x_mix_dataset_det_livetrack_baseline
+
+# For training smaller input size (yolox)
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_224_384.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_224_384
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_256_480.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_256_480
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_320_576.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_320_576
+
+# For training smaller input size (yolox_s)
+#False python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_224_384.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_224_384
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_256_480.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_256_480
+# python tools/train.py -f exps/example/mix_dataset_livetrack/yolox_s_mix_dataset_det_livetrack_320_576.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_s_mot17.pth.tar -expn yolox_s_mix_dataset_det_livetrack_320_576
+
+# For training smaller input size (yolox_tiny)
+#False python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_tiny_mix_dataset_det_livetrack_224_384.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_tiny_mot17.pth.tar -expn yolox_tiny_mix_dataset_det_livetrack_224_384
+# python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_tiny_mix_dataset_det_livetrack_256_480.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_tiny_mot17.pth.tar -expn yolox_tiny_mix_dataset_det_livetrack_256_480
+#False python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_tiny_mix_dataset_det_livetrack_320_576.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_tiny_mot17.pth.tar -expn yolox_tiny_mix_dataset_det_livetrack_320_576
+
+# For training smaller input size (yolox_nano)
+# python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_nano_mix_dataset_det_livetrack_224_384.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_nano_mot17.pth.tar -expn yolox_nano_mix_dataset_det_livetrack_224_384
+# python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_nano_mix_dataset_det_livetrack_256_480.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_nano_mot17.pth.tar -expn yolox_nano_mix_dataset_det_livetrack_256_480
+# python tools/train.py -f exps/example/mix_dataset_livetrack/smaller_version/yolox_nano_mix_dataset_det_livetrack_320_576.py  -d 3 -b 64 --fp16 -o -c weights/mot_pretrained/bytetrack_nano_mot17.pth.tar -expn yolox_nano_mix_dataset_det_livetrack_320_576
