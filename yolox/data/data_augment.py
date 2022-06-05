@@ -186,7 +186,39 @@ def _mirror(image, boxes):
     return image, boxes
 
 
-def preproc(image, input_size, mean, std, swap=(2, 0, 1)):
+def preproc(img, input_size, mean, std, swap=(2, 0, 1)):
+    # timer.tic()
+    if len(img.shape) == 3:
+        padded_img = np.ones((input_size[0], input_size[1], 3), dtype=np.uint8) * 114
+    else:
+        padded_img = np.ones(input_size, dtype=np.uint8) * 114
+    # timer.toc()
+    # print(
+    #     "Body detector pre-processing time padding: {:.3f} s".format(timer.average_time)
+    # )
+    # timer.clear()
+    # timer.tic()
+    r = min(input_size[0] / img.shape[0], input_size[1] / img.shape[1])
+    resized_img = cv2.resize(
+        img,
+        (int(img.shape[1] * r), int(img.shape[0] * r)),
+        interpolation=cv2.INTER_LINEAR,
+    ).astype(np.uint8)
+    # print(
+    #     "Body detector pre-processing time resize: {:.3f} s".format(timer.average_time)
+    # )
+    # timer.clear()
+    # timer.tic()
+    padded_img[: int(img.shape[0] * r), : int(img.shape[1] * r)] = resized_img
+    # timer.toc()
+    # print(
+    #     "Body detector pre-processing time final: {:.3f} s".format(timer.average_time)
+    # )
+    padded_img = padded_img.transpose(swap)
+    padded_img = np.ascontiguousarray(padded_img, dtype=np.float32)
+    return padded_img, r
+
+def bkup_preproc(image, input_size, mean, std, swap=(2, 0, 1)):
     if len(image.shape) == 3:
         padded_img = np.ones((input_size[0], input_size[1], 3)) * 114.0
     else:
